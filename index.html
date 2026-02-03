@@ -120,12 +120,21 @@
             const windowWidth = window.innerWidth;
             const windowHeight = window.innerHeight;
             
-            // Calcular posições aleatórias
-            const maxX = windowWidth - 150;
-            const maxY = windowHeight - 80;
+            // Dimensões do botão (estimadas ou pegar dinamicamente se possível, mas hardcoded é mais seguro para "teleporte")
+            const btnWidth = btnNao.offsetWidth || 150; // fallback seguro
+            const btnHeight = btnNao.offsetHeight || 60; // fallback seguro
             
-            const randomX = Math.floor(Math.random() * maxX);
-            const randomY = Math.floor(Math.random() * maxY);
+            // Margem de segurança para não ficar colado na borda
+            const margin = 20;
+
+            // Calcular área segura
+            const maxX = windowWidth - btnWidth - margin;
+            const maxY = windowHeight - btnHeight - margin;
+            
+            // Gerar posições aleatórias dentro da área segura
+            // Math.max(margin, ...) garante que não saia pela esquerda/topo
+            const randomX = Math.floor(Math.random() * (maxX - margin)) + margin;
+            const randomY = Math.floor(Math.random() * (maxY - margin)) + margin;
             
             // Aplicar posição fixa ao botão
             btnNao.style.position = 'fixed';
